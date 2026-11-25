@@ -452,7 +452,11 @@ export default function App() {
       }
 
       if (!res || !res.ok) {
-        setErrorMessage(data?.error || `Layanan AI sedang sibuk (Status ${res?.status || 503}). Silakan coba klik Buat Soal lagi.`);
+        const fallbackMsg =
+          res?.status === 404
+            ? 'Endpoint /api/generate-questions tidak ditemukan (Status 404). Pastikan server backend atau fungsi serverless sudah aktif.'
+            : `Layanan AI sedang sibuk (Status ${res?.status || 503}). Silakan coba klik Buat Soal lagi.`;
+        setErrorMessage(data?.error || fallbackMsg);
         return;
       }
 

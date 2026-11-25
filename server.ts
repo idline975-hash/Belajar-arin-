@@ -67,7 +67,7 @@ ${jenisSoal === 'Pilihan Ganda' ? 'Setiap soal WAJIB memiliki 4 opsi jawaban (A,
         required: ['soal'],
       };
 
-      const candidateModels = ['gemini-3.1-flash-lite', 'gemini-4-hydrogen', 'gemini-3.8-flash'];
+      const candidateModels = ['gemini-3.1-flash-lite', 'gemini-4-hydrogen'];
 
       let response: any = null;
       let lastError: any = null;
@@ -138,6 +138,8 @@ ${jenisSoal === 'Pilihan Ganda' ? 'Setiap soal WAJIB memiliki 4 opsi jawaban (A,
         friendlyMessage = 'Batas kuota permintaan AI (Free Tier) sementara tercapai. Anda dapat mencoba lagi nanti atau menggunakan API key berbayar di panel Settings > Secrets.';
       } else if (status === 400 || status === 401 || status === 403) {
         friendlyMessage = 'Konfigurasi kunci API AI bermasalah. Silakan periksa panel Settings > Secrets.';
+      } else if (status === 404) {
+        friendlyMessage = 'Model atau endpoint AI tidak ditemukan (404). Silakan periksa konfigurasi model dan server.';
       } else if (error?.name === 'AbortError' || error?.name === 'TimeoutError' || String(error?.message).includes('aborted')) {
         friendlyMessage = 'Layanan AI sedang lambat merespons. Silakan coba kurangi jumlah soal atau klik Buat Soal lagi.';
       }
